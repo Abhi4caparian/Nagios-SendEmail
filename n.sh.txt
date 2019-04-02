@@ -1,0 +1,45 @@
+#!/bin/bash
+
+HOSTNAME=$1
+HOSTSTATETYPE=$2
+HOSTSTATE=$3
+HOSTADDRESS=$4
+USER5=$5
+USER6=$6
+USER7=$7
+LASTHOSTSTATE=$8
+SERVICESTATE=$9
+LASTSERVICESTATE=$10
+
+#echo "changed values $HOSTNAME  $HOSTSTATETYPE $HOSTSTATE $HOSTADDRESS $USER5 $USER6 $USER7                    $LASTHOSTSTATE $SERVICESTATE $LASTSERVICESTATE"
+#output changed values 192.168.3.227 HARD       UP      192.168.3.227 abhishek.punjabi@azilen.com QNx9468= webmail.azilen.com:25        UP WARNING WARNING
+send_email() {
+     echo /usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE \nHost: $HOSTNAME \nHoststatetype: $HOSTSTATETYPE \nHoststate: $HOSTSTATE \nAddress: $HOSTADDRESS \n" | /usr/local/bin/sendEmail -s $USER7 -xu $USER5 -xp $USER6 -f $USER5 -t abhishekpunjabi95@gmail.com -cc abhishek.cba1501@ict.gnu.ac.in -o tls=no -l /var/log/sendEmail -u "** Host Alert: $HOSTNAME is now $HOSTSTATE **" abhishekpunjabi95@gmail.com -m Hostname $HOSTNAME Hostaddress $HOSTADDRESS hoststatetype $HOSTSTATETYPE hoststate $HOSTSTATE notificationtype $NOTIFICATIONTYPE eeeeeeeeeeeeeeeeeeeee
+}
+
+send_e() {
+      echo /usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type:$NOTIFICATIONTYPE \nHost: $HOSTNAME \nHoststatetype: $HOSTSTATETYPE \nHoststate: $HOSTSTATE \nAddress: $HOSTADDRESS \n" | /usr/local/bin/sendEmail -s $USER7 -xu $USER5 -xp $USER6 -f $USER5 -t abhishekpunjabi95@gmail.com -cc abhishek.cba1501@ict.gnu.ac.in -o tls=no -l /var/log/sendEmail -u "** Host Alert: $HOSTNAME is now $HOSTSTATE **" abhishekpunjabi95@gmail.com -m Hi This Is inside HARD$HOSTNAME $HOSTADDRESS hoststatetype $HOSTSTATETYPE hoststate $HOSTSTATE notificationtype $NOTIFICATIONTYPE
+}
+
+send_emailS() {
+      echo /usr/bin/printf "%b" "***** Nagios *****\n\nNotification Type: $NOTIFICATIONTYPE \nHost: $HOSTNAME \nHoststatetype: $HOSTSTATETYPE \nHoststate: $HOSTSTATE \nAddress: $HOSTADDRESS \n" | /usr/local/bin/sendEmail -s $USER7 -xu $USER5 -xp $USER6 -f $USER5 -t abhishekpunjabi95@gmail.com -cc abhishek.cba1501@ict.gnu.ac.in -o tls=no -l /var/log/sendEmail -u "** Host Alert: $HOSTNAME is now $HOSTSTATE **" abhishekpunjabi95@gmail.com -m Hi This Is inside HARD$HOSTNAME $HOSTADDRESS hoststatetype $HOSTSTATETYPE hoststate $HOSTSTATE notificationtype $NOTIFICATIONTYPE
+}
+#######################
+if [ [ $HOSTSTATE == "DOWN" && $LASTHOSTSTATE == "UP" ] || [ $HOSTSTATE == "UNREACHABLE" && $LASTHOSTSTATE == "UP" ] || [ $HOSTSTATE == "CRITICAL" && $LASTHOSTSTATE == "UP" ] ]; then
+        send_email
+#if [ [$HOSTSTATETYPE == "HARD"] ]; then
+#elif [ $HOSTSTATETYPE == ""  ];then
+#       send_e
+else
+        echo " all ok no mail is sent $HOSTNAME  $HOSTSTATETYPE $HOSTSTATE $HOSTADDRESS $USER5 $USER6 $USER7 $LASTHOSTSTATE $SERVICESTATE $LASTSERVICESTATE"
+
+
+
+
+#               echo "Inside warning"
+#       elif [ $HOSTSTATE = "CRITICAL" ]; then
+#               send_e
+#               echo "Inside critical"
+
+fi
+
